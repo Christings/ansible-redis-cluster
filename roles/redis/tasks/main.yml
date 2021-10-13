@@ -1,0 +1,35 @@
+- block:
+    - name: 创建目录
+      file: name={{ redis_dir }} state=directory
+
+    - name: 复制redis-cluster.tmpl文件
+      template: src=redis-cluster.tmpl.j2 dest={{ redis_dir }}/redis-cluster.tmpl
+
+    - name: 复制redis-conf-create.sh文件
+      template: src=redis-conf-create.sh.j2 dest={{ redis_dir }}/redis-conf-create.sh
+
+    - name: 复制redis-docker-run.sh文件
+      template: src=redis-docker-run.sh.j2 dest={{ redis_dir }}/redis-docker-run.sh
+
+    - name: 复制redis-cluster-cli.sh文件
+      template: src=redis-cluster-cli.sh.j2 dest={{ redis_dir }}/redis-cluster-cli.sh
+    
+    - name: 复制redis_6.0.7.tar文件
+      copy: src=redis_6.0.7.tar dest={{ redis_dir }}/redis_6.0.7.tar
+
+    - name: "安装redis"
+      shell: "cd {{ redis_dir }} && \
+              sudo docker load < redis_6.0.7.tar"
+    
+    - name: "执行redis-conf-create.sh脚本"
+      shell: "cd {{ redis_dir }} && \
+              sh redis-conf-create.sh"
+
+    - name: "执行redis-docker-run.sh脚本"
+      shell: "cd {{ redis_dir }} && \
+              sudo docker ps -a | grep redis:6.0.7  >/dev/null || sudo sh redis-docker-run.sh"
+
+    - name: "执行redis-cluster-cli.sh脚本"
+      run_once: true
+      shell: "cd {{ redis_dir }} && \
+              sh redis-cluster-cli.sh"

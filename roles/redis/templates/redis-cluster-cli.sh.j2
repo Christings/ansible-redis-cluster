@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo docker exec -it redis-{{ ports[0]}} bash -c "/usr/local/bin/redis-cli --cluster create {% for host in groups['redis'] -%}  {% for port in hostvars[host].ports %}{{host}}:{{port}} {{" "}}{%- endfor %}{%- endfor %}  --cluster-replicas 1 --cluster-yes -a {{redis_password}} "

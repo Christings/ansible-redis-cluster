@@ -1,0 +1,6 @@
+#!/bin/bash
+for port in {{ ports | join(' ')}}; do \
+  mkdir -p ${port}/conf \
+  && PORT=${port} envsubst < redis-cluster.tmpl > ${port}/conf/redis.conf \
+  && mkdir -p ${port}/data;\
+done

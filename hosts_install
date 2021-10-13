@@ -1,0 +1,4 @@
+[redis]
+10.1.12.214  ansible_user=paasopt HN=x86-nlpass-kafka ports=[8091,8092]
+10.1.12.215  ansible_user=paasopt HN=x86-nlpass-kafka ports=[8093,8094]
+10.1.12.216  ansible_user=paasopt HN=x86-nlpass-redis ports=[8095,8096]
