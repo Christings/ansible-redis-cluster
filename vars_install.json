@@ -1,7 +1,5 @@
 {
   "workerspace": "/home/paasopt",
-  "harbor_dir": "{{ workerspace }}/harbor",
-  "harbor_location": "/paaslog/harbor",
   "redis_dir": "{{ workerspace }}/redis-cluster",
   "redis_password": "PaasDev2.3"
 }
